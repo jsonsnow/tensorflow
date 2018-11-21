@@ -1,3 +1,25 @@
+#### 配置共享文件夹
+
+在共享文件设置中关联主机的的共享文件夹，选择固定分配，具体步骤如下
+
+1.共享文件夹的配置
+
+![avatar](./1542617455304.jpg)
+
+2.开启ubuntu的增强功能 - devices->insert geuset xxx
+
+3.
+
+```
+sudo apt install nfs-common
+sudo apt install cifs-uitls
+sudo mount -t vboxsf <macShare>  <ubuntuShare>
+```
+
+
+
+
+
 #### ubuntu安装python
 sudo apt install python-pip python-dev
 
