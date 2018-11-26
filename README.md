@@ -1,7 +1,7 @@
 <script type="text/javascript"
    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-#### 配置共享文件夹
+### 配置共享文件夹
 
 在共享文件设置中关联主机的的共享文件夹，选择固定分配，具体步骤如下
 
@@ -20,7 +20,7 @@ sudo mount -t vboxsf <macShare>  <ubuntuShare>
 ```
 
 
-#### ubuntu安装python
+### ubuntu安装python
 sudo apt install python-pip python-dev
 
 配置python虚拟开发环境
@@ -43,7 +43,7 @@ ubuntu安卓的python不带tkinter库，在使用matplotlib会出错
 sudo apt install python-tk
 ```
 
-#### python 安装tensorflow
+### python 安装tensorflow
 
 ```
 pip install --upgrade pip
@@ -53,12 +53,17 @@ pip install --upgrade tensorflow
 pip install --user --upgrade tesorflow （该命令即使在虚拟环境下也会安装的home目录）
 ```
 
-#### tensorflow
+### tensorflow
 tensorflow 的架构设计为client - service模式
 client负责图的构建，图由tensor和operation构成，
 service:Session，run运行客户端构建的图，这个计算过程可以是GPU，CPU，TPC来运行，并且支持分布式。
 
-#### CNN笔记
+### CNN笔记
+卷积神经网络是干嘛的？
+
+我们之前学图像处理遇到的卷积，一般来说，这个卷积核是已知的，比如各种边缘检测算子，高斯模糊这些，都是已经知道卷积核的，然后再与图像进行卷积运算。然而深度学习中的卷积神经网络卷积核是未知的，我们训练一个神经网络，就是要训练得出这些卷积核，这些卷积核就相当于单层感知器的那些参数W，可以把这些待学习的卷积核看成是神经网络的训练参数W。
+
+#### 卷积网络中的结构
 首先来看看几个概念，全连接层，局部连接层，权值共享
 
 ##### 全连接层(Fully Connected layer)
@@ -75,7 +80,7 @@ service:Session，run运行客户端构建的图，这个计算过程可以是GP
 
    这么多的参数肯定是不行的，因为输出的每一个像素都与原图片所有像素有连接，每一个连接都需要一个参数。因为图像都是局部相关的，可以让输出层的每一个像素只与输入层图片的一个局部向连，那么需要的参数个数就会大大减少；比如只与F*F的一个小块有连接，也就是输出层的像素，是通过原图这个F * F的一个小方形中的像素计算出来，这时候需要的参数是W * H * F * F，如果F在10以内，那么需要的参数只有10^5~10^6级别，相比全连接小了很多很多。
    
-   但是可以发现参数量还是很大；图片有另一个特征：图片的底层特征是与特征在图片中的位置无关。同一深度的点可以共享同一组F * F的参数，这样同一层的参数只有F * F个，一下少了很多。但这组F*F只能得到一张feature map,一般有多组参数
+   但是可以发现参数量还是很大；图片有另一个特征：图片的底层特征是与特征在图片中的位置无关。同一深度的点可以共享同一组F * F的参数，这样同一层的参数只有F * F个，一下少了很多。但这组F*F只能得到一张feature map,一般有多组参数，分别经过卷积后就可以有好几层feature map
 
 
 ##### softmax
