@@ -55,3 +55,22 @@ tensorflow 的架构设计为client - service模式
 client负责图的构建，图由tensor和operation构成，
 service:Session，run运行客户端构建的图，这个计算过程可以是GPU，CPU，TPC来运行，并且支持分布式。
 
+#### CNN
+
+卷积的物理意义：
+系统某一时刻的输出是由多个输入共同作用(叠加)的结果。
+
+![avatar](./source/cnn.jpg)
+
+上图为卷积的公式，放在图像分析里，f(x)可以理解为原始像素点(source pixel),所有的原始像素点叠加起来，就是原始图了。  
+
+g(x)可以成为作用点，所有作用点合起来我们称之为卷积核(Convolution kernel)  
+
+卷积核上所有作用点依次作用于原始像素点后(即乘起来)，线性叠加的输出结果，即是最终卷积的输出，也是我们想要的,destination pixel
+
+谈谈卷积的意义，一个公式出来是为了解决某一类问题，卷积也是。
+
+
+
+
+
