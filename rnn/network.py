@@ -85,7 +85,25 @@ class Model(object):
 		if not is_training:
 			return 
 
+		self.learn_rate = tf.Variable(0.0, trainable=False)
+
+		tvar = tf.trainable_variables()
+
+		# tf.clip_by_gloal_nrom（实现 Gradient clipping （梯度裁剪））是为了防止梯度爆炸
+		# tf.gradients 计算 self.clost对 tvars的梯度(求导)， 返回一个梯度的列表
+		grads, _ = tf.clip_by_global_norm(tf.gradients(self.cost, tvar), 5)
+
+		optimizer = tf.train.GradientDescentOptimizer(self.learn_rate)
+
+		self.train_op = optimizer.apply_gradients(
+			zip(grads, tvar),
+			global_step=tf.train.get_or_create_global_step())
+
+		self.new_lr = tf.placeholder(tf.float32, shape=[])
+		self.lr_update = tf.assign(self.learn_rate, self.new_lr)
+
+	# 更新 学习率
 	def assign_lr(self, session, lr_value):
-		session.run(self, lr_update)
+		session.run(self.lr_update, feed_dict={self.new_lr: lr_value})
 
 
