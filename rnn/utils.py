@@ -1,4 +1,5 @@
-# -*- conding: UTF-8 -*-
+# _*_ coding: UTF-8 _*_
+
 
 import os
 import sys
@@ -12,7 +13,7 @@ import tensorflow as tf
 """
 
 """
-data_path = "./data"
+data_path = "data"
 save_path = './save'
 load_file = 'train-checkpoint-69'
 
@@ -34,6 +35,7 @@ def read_words():
 
 def build_vocab(filename):
 	data = read_words(filename)
+	print(data)
 
 	counter = collections.Counter(data)
 	count_pairs = sorted(counter.items(), key=lambda x: (-x[1],x[0]))
@@ -56,6 +58,7 @@ def load_data(data_path):
 	train_path = os.path.join(data_path,'ptb.train.txt')
 	valid_path = os.path.join(data_path,'ptb.valid.txt')
 	test_path = os.path.join(data_path, 'ptb.test.txt')
+	print(train_path)
 
 	word_to_id = build_vocab(train_path)
 
