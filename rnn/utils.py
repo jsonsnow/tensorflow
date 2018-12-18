@@ -10,24 +10,7 @@ import tensorflow as tf
 
 
 """
-#batch size 批次(样本)数目，一次迭代(Forword 运算(用于得到随时函数)以及BackPropagetion运算(用于更新神经网络参数))，所有样本的数目，Bach Size越大，所需的内存就越大
-#Iteration: 迭代，每一次迭代更新一次权重(网络参数)，每次权重更新需要 batch size 个数据进行 Forward 运算， 再进行BP运算
-# Epoch: 纪元/时代， 所有训练样本完成一次迭代
 
-eg ：训练样本有1000个， Batch_size = 10
-那么训练完整个样本需要： 100次Iteration, 1个Epoch
-但一般我都不止训练一个Epoch
-
-====== 超参数(Hyper parameter) ======
-init_scale: 权重参数(weights)的初始化取值宽度，一开始取小一些比较有利训练
-learning_rate: 学习率，训练时初始为 1.0
-num_layers: LSTM 层的数目(默认是2)
-num_steps: LSTM 展开的步(step) 数， 相当于每个批次输入单词的数目(默认是35)
-hidden_size: LSTM 层神经元数目，也是词向量的维度(默认是650)
-max_lr_epoch: 用初始学习训练的ephoch数目(默认是10)
-dropout: 在Dropout层的留存率(默认是0.5)
-lr_decay: 在过了max_lr_epoch之后每一个Epoch的学习衰减率，巡礼时初始为0.93.让学习率逐渐衰退是提高训练效率的有效方法
-batch_size: 彼此数目(batch_size 默认是20)
 """
 data_path = "./data"
 save_path = './save'
