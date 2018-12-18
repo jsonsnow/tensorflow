@@ -1,28 +1,37 @@
-# _*_ conding: UTF-8 _*_
+# -*- conding: UTF-8 -*-
 
 import os
 import sys
-<<<<<<< HEAD
 import datetime
 import argparse
 import collections
-
-import numpy as np
-#import tensorflow as tf
-=======
-import argparse
-import datetime
-import collections
-
 import numpy as np
 import tensorflow as tf
->>>>>>> 7a3e15c5f92593fcd5639ca4b463b6eca0ebda98
 
-data_path = "/home/snow/Desktop/tensorflow/tensorflow/simple-examples/data"
+
+"""
+#batch size 批次(样本)数目，一次迭代(Forword 运算(用于得到随时函数)以及BackPropagetion运算(用于更新神经网络参数))，所有样本的数目，Bach Size越大，所需的内存就越大
+#Iteration: 迭代，每一次迭代更新一次权重(网络参数)，每次权重更新需要 batch size 个数据进行 Forward 运算， 再进行BP运算
+# Epoch: 纪元/时代， 所有训练样本完成一次迭代
+
+eg ：训练样本有1000个， Batch_size = 10
+那么训练完整个样本需要： 100次Iteration, 1个Epoch
+但一般我都不止训练一个Epoch
+
+====== 超参数(Hyper parameter) ======
+init_scale: 权重参数(weights)的初始化取值宽度，一开始取小一些比较有利训练
+learning_rate: 学习率，训练时初始为 1.0
+num_layers: LSTM 层的数目(默认是2)
+num_steps: LSTM 展开的步(step) 数， 相当于每个批次输入单词的数目(默认是35)
+hidden_size: LSTM 层神经元数目，也是词向量的维度(默认是650)
+max_lr_epoch: 用初始学习训练的ephoch数目(默认是10)
+dropout: 在Dropout层的留存率(默认是0.5)
+lr_decay: 在过了max_lr_epoch之后每一个Epoch的学习衰减率，巡礼时初始为0.93.让学习率逐渐衰退是提高训练效率的有效方法
+batch_size: 彼此数目(batch_size 默认是20)
+"""
+data_path = "./data"
+save_path = './save'
 load_file = 'train-checkpoint-69'
-
-a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-print([ [row[col] for row in a ] for col in range(len(row))])
 
 
 parser = argparse.ArgumentParser()
@@ -33,48 +42,6 @@ args = parser.parse_args()
 #if py3
 Py3 = sys.version_info[0] == 3
 
-<<<<<<< HEAD
-#将文件根据语句结束标识符<eos>分割
-
-def read_words(filename):
-	with tf.gfile.GFile(filename, "r") as f:
-		if py3:
-			return f.read().replace("\n","<eos>").split()
-		else:
-			return f.read().decode("utf-8").replace("\n","<eos>").split()
-
-#构造从单词到唯一整数值的映射
-
-def build_vocab():
-	data = read_words(filename)
-
-	counter = collections.Counter(data)
-	count_pairs = sorted(counter.items(), key=lambda x:(-x[1],x[0]))
-	words, _ = list(zip(*count_pairs))
-
-	#单词到整数的映射
-	word_to_id = dict(zip(words, range(len(words))))
-
-	return word_to_id
-
-def file_to_word_ids(filename, word_to_id):
-	data = read_words(filename)
-	
-#记载所有数据，读取所有单词，把其转成唯一对应的
-def load_data():
-	train_path = os.path.join(data_path, 'ptb.train.txt')
-	valid_path = os.path.join(data_path, 'ptb.valid.txt')
-	test_path = os.path.join(data_path, 'ptb.test.txt')
-
-	#建立词汇表，将所有单词(word)转为唯一对应的整数
-	word_to_id = build_vocab(train_path)
-
-	#
-	vocab_size = len(word_to_id)
-
-	#反转一个词汇表：为了之后从整数 转为 单词
-	id_to_word = dict(zip(word_to_id.values()),)
-=======
 def read_words():
 	with tf.gfile.GFile(filename, 'r') as f:
 		if Py3:
@@ -128,7 +95,7 @@ def load_data(data_path):
 	return train_data, valid_data, test_data, vocab_size, id_to_word
 
 def generate_batches(raw_data, batch_size, num_steps):
-	
+	#将数据转为 Tensor类型
 	raw_data = tf.convert_to_tensor(raw_data, name='raw_data', dtype=tf.int32)
 	data_len = tf.size(raw_data)
 	batch_len = data_len // batch_size
@@ -156,5 +123,7 @@ class Input(object):
 		self.epoch_size = ((len(data) // batch_size) - 1) // num_steps
 		self.input_data, self.targets = generate_batches(data, batch_size, num_steps)
 
->>>>>>> 7a3e15c5f92593fcd5639ca4b463b6eca0ebda98
+if __name__ == '__main__':
+	load_data(data_path)
+
 

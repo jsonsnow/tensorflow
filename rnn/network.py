@@ -39,7 +39,7 @@ class Model(object):
 		#初始的状态（包含前一时刻LSTM的输出h(t-1) 和前一时刻的单元状态c(t-1),用于之后的dynamic_rnn）
 		rnn_tuple_state = tuple(
 			[tf.contrib.rnn.LSTMStateTuple(state_per_layer_list[idx][0], state_per_layer_list[idx][1]) 
-			for idx in range(num_layers)]
+			for idx in range(num_layers)])
 
 		# 创建一个LSTM层， 其中的神经元数目是hidden_size 个(默认650 个)
 		cell = tf.contrib.rnn.LSTMCell(hidden_size)
