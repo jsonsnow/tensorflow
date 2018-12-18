@@ -1,4 +1,5 @@
-# -*- conding: UTF-8 -*-
+# _*_ coding: UTF-8 _*_
+
 
 import os
 import sys
@@ -29,7 +30,7 @@ dropout: 在Dropout层的留存率(默认是0.5)
 lr_decay: 在过了max_lr_epoch之后每一个Epoch的学习衰减率，巡礼时初始为0.93.让学习率逐渐衰退是提高训练效率的有效方法
 batch_size: 彼此数目(batch_size 默认是20)
 """
-data_path = "./data"
+data_path = "data"
 save_path = './save'
 load_file = 'train-checkpoint-69'
 
@@ -51,6 +52,7 @@ def read_words():
 
 def build_vocab(filename):
 	data = read_words(filename)
+	print(data)
 
 	counter = collections.Counter(data)
 	count_pairs = sorted(counter.items(), key=lambda x: (-x[1],x[0]))
@@ -73,6 +75,7 @@ def load_data(data_path):
 	train_path = os.path.join(data_path,'ptb.train.txt')
 	valid_path = os.path.join(data_path,'ptb.valid.txt')
 	test_path = os.path.join(data_path, 'ptb.test.txt')
+	print(train_path)
 
 	word_to_id = build_vocab(train_path)
 
